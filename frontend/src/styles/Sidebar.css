@@ -1,0 +1,131 @@
+/* sidebar.css - EduEvent Theme */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main Sidebar Container */
+.sidebar {
+  width: 300px;
+  height: 100vh;
+  background: linear-gradient(180deg, #4158D0 0%, #C850C0 100%);
+  color: white;
+  padding: 2rem 1rem;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  z-index: 100;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Sidebar Title - Adjusted for navbar */
+.sidebar-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 70px;  /* This pushes it down below navbar */
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  letter-spacing: -0.5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Sidebar Menu */
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 0.8rem;
+}
+
+/* Menu Links */
+.sidebar-menu a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 0.9rem 1.2rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 1rem;
+}
+
+.sidebar-menu a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(5px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar-menu a.active {
+  background: white;
+  color: #4158D0;
+  font-weight: 700;
+  border: none;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
+}
+
+/* Logout Button Styling (for button element) */
+.sidebar-logout-btn {
+  width: 100%;
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 0.9rem 1.2rem;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  background: rgba(245, 87, 108, 0.2);
+  border: 1px solid rgba(245, 87, 108, 0.3);
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 2rem;
+}
+
+.sidebar-logout-btn:hover {
+  background: #f5576c;
+  color: white;
+  border-color: #f5576c;
+  transform: translateX(5px);
+  box-shadow: 0 5px 15px rgba(245, 87, 108, 0.3);
+}
+
+/* If you want to keep the last-child a styling for backward compatibility */
+.sidebar-menu li:last-child a {
+  margin-top: 2rem;
+  background: rgba(245, 87, 108, 0.2);
+  border-color: rgba(245, 87, 108, 0.3);
+  text-align: left;
+  font-weight: 600;
+}
+
+.sidebar-menu li:last-child a:hover {
+  background: #f5576c;
+  color: white;
+  border-color: #f5576c;
+  transform: translateX(5px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar-title {
+    margin-top: 60px;  /* Slightly less on mobile */
+  }
+  
+  .sidebar-logout-btn {
+    padding: 0.8rem 1rem;
+  }
+}

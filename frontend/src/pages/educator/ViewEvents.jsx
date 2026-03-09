@@ -1,119 +1,174 @@
+// frontend/src/pages/educator/ViewEvents.jsx
+
 import React, { useState } from "react";
-import "./educator.css";
-import { FaCalendarAlt, FaSearch } from "react-icons/fa";
+import { FaCalendarAlt, FaSearch, FaMapMarkerAlt, FaUsers, FaClock, FaFilter } from "react-icons/fa";
+import SidebarEducator from "../../components/SidebarEducator";
+import "../../styles/educator.css";
 
-function ViewEvents(){
+function ViewEvents() {
+  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("all");
 
-const [search,setSearch] = useState("");
+  const events = [
+    { 
+      id: 1, 
+      name: "AI Workshop", 
+      date: "2024-06-10", 
+      time: "10:00 AM",
+      location: "Online",
+      attendees: 45,
+      capacity: 100,
+      status: "upcoming",
+      category: "Workshop"
+    },
+    { 
+      id: 2, 
+      name: "Web Development Bootcamp", 
+      date: "2024-06-15", 
+      time: "2:00 PM",
+      location: "Room 301",
+      attendees: 30,
+      capacity: 50,
+      status: "upcoming",
+      category: "Bootcamp"
+    },
+    { 
+      id: 3, 
+      name: "Hackathon 2024", 
+      date: "2024-06-20", 
+      time: "9:00 AM",
+      location: "Main Hall",
+      attendees: 120,
+      capacity: 150,
+      status: "upcoming",
+      category: "Hackathon"
+    },
+    { 
+      id: 4, 
+      name: "React Masterclass", 
+      date: "2024-06-05", 
+      time: "11:00 AM",
+      location: "Lab 2",
+      attendees: 25,
+      capacity: 30,
+      status: "completed",
+      category: "Workshop"
+    }
+  ];
 
-const events=[
-{id:1,name:"AI Workshop",date:"10 June 2026"},
-{id:2,name:"Web Development",date:"15 June 2026"},
-{id:3,name:"Hackathon",date:"20 June 2026"}
-];
+  const filteredEvents = events
+    .filter(event => event.name.toLowerCase().includes(search.toLowerCase()))
+    .filter(event => filter === "all" || event.status === filter);
 
-const filteredEvents = events.filter(event =>
-event.name.toLowerCase().includes(search.toLowerCase())
-);
+  const getStatusClass = (status) => {
+    return status === "upcoming" ? "status-badge upcoming" : "status-badge completed";
+  };
 
-return(
+  return (
+    <div className="educator-layout">
+      <SidebarEducator />
+      
+      <div className="educator-content">
+        <div className="page-header">
+          <h1 className="page-title">Events</h1>
+          <p className="page-subtitle">Manage and track your educational events</p>
+        </div>
 
-<div style={{
-background:"linear-gradient(135deg,#e0f2fe,#eef2ff)",
-minHeight:"100vh",
-padding:"30px"
-}}>
+        {/* Search and Filter Bar */}
+        <div className="events-toolbar">
+          <div className="search-bar">
+            <FaSearch className="search-icon" />
+            <input
+              type="text"
+              placeholder="Search events..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
 
-<h2 style={{
-marginBottom:"25px",
-color:"#1e3a8a"
-}}>
-Available Events
-</h2>
+          <div className="filter-buttons">
+            <FaFilter className="filter-icon" />
+            <button 
+              className={`filter-btn ${filter === "all" ? "active" : ""}`}
+              onClick={() => setFilter("all")}
+            >
+              All
+            </button>
+            <button 
+              className={`filter-btn ${filter === "upcoming" ? "active" : ""}`}
+              onClick={() => setFilter("upcoming")}
+            >
+              Upcoming
+            </button>
+            <button 
+              className={`filter-btn ${filter === "completed" ? "active" : ""}`}
+              onClick={() => setFilter("completed")}
+            >
+              Completed
+            </button>
+          </div>
+        </div>
 
-{/* Search */}
+        {/* Events Grid */}
+        <div className="events-grid">
+          {filteredEvents.map((event) => (
+            <div key={event.id} className="event-card">
+              <div className="event-card-header">
+                <span className="event-category">{event.category}</span>
+                <span className={getStatusClass(event.status)}>
+                  {event.status}
+                </span>
+              </div>
+              
+              <h3 className="event-title">{event.name}</h3>
 
-<div style={{
-marginBottom:"30px",
-display:"flex",
-alignItems:"center",
-gap:"10px"
-}}>
+              <div className="event-details">
+                <div className="event-detail">
+                  <FaCalendarAlt className="detail-icon" />
+                  <span>{new Date(event.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+                </div>
+                <div className="event-detail">
+                  <FaClock className="detail-icon" />
+                  <span>{event.time}</span>
+                </div>
+                <div className="event-detail">
+                  <FaMapMarkerAlt className="detail-icon" />
+                  <span>{event.location}</span>
+                </div>
+                <div className="event-detail">
+                  <FaUsers className="detail-icon" />
+                  <span>{event.attendees}/{event.capacity} attendees</span>
+                </div>
+              </div>
 
-<FaSearch style={{color:"#555"}}/>
+              <div className="progress-bar">
+                <div 
+                  className="progress-fill" 
+                  style={{ width: `${(event.attendees/event.capacity)*100}%` }}
+                ></div>
+              </div>
 
-<input
-type="text"
-placeholder="Search events..."
-value={search}
-onChange={(e)=>setSearch(e.target.value)}
-style={{
-padding:"10px",
-borderRadius:"6px",
-border:"1px solid #ccc",
-width:"260px"
-}}
-/>
+              <div className="event-actions">
+                <button className="view-btn">View Details</button>
+                {event.status === "upcoming" && (
+                  <>
+                    <button className="edit-btn">Edit</button>
+                    <button className="cancel-btn">Cancel</button>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
 
-</div>
-
-{/* Event Cards */}
-
-<div style={{
-display:"grid",
-gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))",
-gap:"20px"
-}}>
-
-{filteredEvents.map((event)=>(
-
-<div
-key={event.id}
-style={{
-background:"#ffffff",
-padding:"20px",
-borderRadius:"12px",
-boxShadow:"0 6px 15px rgba(0,0,0,0.15)",
-transition:"all 0.3s",
-cursor:"pointer"
-}}
-onMouseEnter={e=>{
-e.currentTarget.style.transform="translateY(-8px)";
-e.currentTarget.style.boxShadow="0 10px 25px rgba(0,0,0,0.2)";
-}}
-onMouseLeave={e=>{
-e.currentTarget.style.transform="translateY(0)";
-e.currentTarget.style.boxShadow="0 6px 15px rgba(0,0,0,0.15)";
-}}
->
-
-<h3 style={{
-marginBottom:"10px",
-color:"#2563eb"
-}}>
-{event.name}
-</h3>
-
-<p style={{
-display:"flex",
-alignItems:"center",
-gap:"8px",
-color:"#444"
-}}>
-<FaCalendarAlt/>
-{event.date}
-</p>
-
-</div>
-
-))}
-
-</div>
-
-</div>
-
-)
-
+          {filteredEvents.length === 0 && (
+            <div className="no-events">
+              <p>No events found</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default ViewEvents;

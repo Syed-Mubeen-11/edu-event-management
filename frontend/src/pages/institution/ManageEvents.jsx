@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import SidebarInstitution from "../../components/SidebarInstitution";
+import "../../styles/institution.css";
 
 const ManageEvents = () => {
   const [events, setEvents] = useState([
@@ -9,9 +11,20 @@ const ManageEvents = () => {
 
   const [showForm, setShowForm] = useState(false);
   const [editing, setEditing] = useState(null);
-  const [form, setForm] = useState({ title: '', date: '', time: '', venue: '', instructor: '', seats: '' });
+  const [form, setForm] = useState({ 
+    title: '', 
+    date: '', 
+    time: '', 
+    venue: '', 
+    instructor: '', 
+    seats: '' 
+  });
 
-  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleChange = (e) => setForm({ 
+    ...form, 
+    [e.target.name]: e.target.value 
+  });
+
   const createEvent = () => {
     const newEvent = { 
       id: events.length + 1, 
@@ -27,7 +40,9 @@ const ManageEvents = () => {
   };
 
   const updateEvent = () => {
-    const updated = events.map(e => e.id === editing.id ? { ...e, ...form, seats: parseInt(form.seats) } : e);
+    const updated = events.map(e => 
+      e.id === editing.id ? { ...e, ...form, seats: parseInt(form.seats) } : e
+    );
     setEvents(updated);
     setEditing(null);
     setForm({ title: '', date: '', time: '', venue: '', instructor: '', seats: '' });
@@ -46,51 +61,261 @@ const ManageEvents = () => {
   };
 
   return (
-    <div>
-      <h1>📋 Manage Events</h1>
-      
-      <button onClick={() => setShowForm(true)}>+ Create Event</button>
+    <div className="institution-layout">
+      <SidebarInstitution />
 
-      {showForm && (
-        <div>
-          <h3>New Event</h3>
-          <input name="title" placeholder="Title" value={form.title} onChange={handleChange} /><br/>
-          <input name="date" type="date" value={form.date} onChange={handleChange} /><br/>
-          <input name="time" type="time" value={form.time} onChange={handleChange} /><br/>
-          <input name="venue" placeholder="Venue" value={form.venue} onChange={handleChange} /><br/>
-          <input name="instructor" placeholder="Instructor" value={form.instructor} onChange={handleChange} /><br/>
-          <input name="seats" placeholder="Max Seats" value={form.seats} onChange={handleChange} /><br/>
-          <button onClick={createEvent}>Save</button>
-          <button onClick={() => setShowForm(false)}>Cancel</button>
+      <div className="manage-events-container">
+        <div className="manage-events-header">
+          <h1 className="page-title">📋 Manage Events</h1>
+          <button 
+            className="btn-primary create-event-btn"
+            onClick={() => setShowForm(true)}
+          >
+            + Create New Event
+          </button>
         </div>
-      )}
 
-      {editing && (
-        <div>
-          <h3>Edit Event</h3>
-          <input name="title" value={form.title} onChange={handleChange} /><br/>
-          <input name="date" type="date" value={form.date} onChange={handleChange} /><br/>
-          <input name="time" type="time" value={form.time} onChange={handleChange} /><br/>
-          <input name="venue" value={form.venue} onChange={handleChange} /><br/>
-          <input name="instructor" value={form.instructor} onChange={handleChange} /><br/>
-          <input name="seats" value={form.seats} onChange={handleChange} /><br/>
-          <button onClick={updateEvent}>Update</button>
-          <button onClick={() => setEditing(null)}>Cancel</button>
-        </div>
-      )}
+        {/* Create Event Form Modal */}
+        {showForm && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h3>Create New Event</h3>
+              <form className="event-form">
+                <div className="form-group">
+                  <label>Title</label>
+                  <input 
+                    name="title" 
+                    placeholder="Event Title" 
+                    value={form.title} 
+                    onChange={handleChange} 
+                    className="form-control"
+                  />
+                </div>
 
-      <div>
-        <h3>All Events</h3>
-        {events.map(e => (
-          <div key={e.id}>
-            <h4>{e.title}</h4>
-            <p>{e.date} {e.time} | {e.venue} | {e.instructor}</p>
-            <p>Registrations: {e.registered}/{e.seats} | Status: {e.status}</p>
-            <button onClick={() => editEvent(e)}>Edit</button>
-            <button onClick={() => deleteEvent(e.id)}>Delete</button>
-            <button onClick={() => alert(JSON.stringify(e, null, 2))}>View</button>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Date</label>
+                    <input 
+                      name="date" 
+                      type="date" 
+                      value={form.date} 
+                      onChange={handleChange} 
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Time</label>
+                    <input 
+                      name="time" 
+                      type="time" 
+                      value={form.time} 
+                      onChange={handleChange} 
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Venue</label>
+                  <input 
+                    name="venue" 
+                    placeholder="Venue" 
+                    value={form.venue} 
+                    onChange={handleChange} 
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Instructor</label>
+                  <input 
+                    name="instructor" 
+                    placeholder="Instructor" 
+                    value={form.instructor} 
+                    onChange={handleChange} 
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Max Seats</label>
+                  <input 
+                    name="seats" 
+                    placeholder="Max Seats" 
+                    value={form.seats} 
+                    onChange={handleChange} 
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="form-actions">
+                  <button type="button" className="btn-submit" onClick={createEvent}>
+                    Save Event
+                  </button>
+                  <button 
+                    type="button" 
+                    className="btn-cancel"
+                    onClick={() => setShowForm(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-        ))}
+        )}
+
+        {/* Edit Event Form Modal */}
+        {editing && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h3>Edit Event</h3>
+              <form className="event-form">
+                <div className="form-group">
+                  <label>Title</label>
+                  <input 
+                    name="title" 
+                    value={form.title} 
+                    onChange={handleChange} 
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Date</label>
+                    <input 
+                      name="date" 
+                      type="date" 
+                      value={form.date} 
+                      onChange={handleChange} 
+                      className="form-control"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Time</label>
+                    <input 
+                      name="time" 
+                      type="time" 
+                      value={form.time} 
+                      onChange={handleChange} 
+                      className="form-control"
+                    />
+                  </div>
+                </div>
+
+                <div className="form-group">
+                  <label>Venue</label>
+                  <input 
+                    name="venue" 
+                    value={form.venue} 
+                    onChange={handleChange} 
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Instructor</label>
+                  <input 
+                    name="instructor" 
+                    value={form.instructor} 
+                    onChange={handleChange} 
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Max Seats</label>
+                  <input 
+                    name="seats" 
+                    value={form.seats} 
+                    onChange={handleChange} 
+                    className="form-control"
+                  />
+                </div>
+
+                <div className="form-actions">
+                  <button type="button" className="btn-submit" onClick={updateEvent}>
+                    Update Event
+                  </button>
+                  <button 
+                    type="button" 
+                    className="btn-cancel"
+                    onClick={() => setEditing(null)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Events List */}
+        <div className="events-list">
+          <h3>All Events ({events.length})</h3>
+          
+          <div className="events-table-container">
+            <table className="events-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Venue</th>
+                  <th>Instructor</th>
+                  <th>Registrations</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {events.map(event => (
+                  <tr key={event.id}>
+                    <td><strong>{event.title}</strong></td>
+                    <td>{event.date}</td>
+                    <td>{event.time}</td>
+                    <td>{event.venue}</td>
+                    <td>{event.instructor}</td>
+                    <td>
+                      <span className={event.registered === event.seats ? 'text-warning' : ''}>
+                        {event.registered}/{event.seats}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`status-badge ${event.status.toLowerCase()}`}>
+                        {event.status}
+                      </span>
+                    </td>
+                    <td>
+                      <button 
+                        className="btn-icon edit-btn"
+                        onClick={() => editEvent(event)}
+                        title="Edit"
+                      >
+                        ✏️
+                      </button>
+                      <button 
+                        className="btn-icon delete-btn"
+                        onClick={() => deleteEvent(event.id)}
+                        title="Delete"
+                      >
+                        🗑️
+                      </button>
+                      <button 
+                        className="btn-icon view-btn"
+                        onClick={() => alert(JSON.stringify(event, null, 2))}
+                        title="View"
+                      >
+                        👁️
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

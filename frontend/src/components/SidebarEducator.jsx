@@ -1,13 +1,54 @@
-function SidebarEducator() {
-  return (
-    <div>
-      <h2>Educator Panel</h2>
+import { Link, useLocation, useNavigate } from "react-router-dom"; // Add useNavigate
+import "../styles/sidebar.css";
 
-      <ul>
-        <li>Dashboard</li>
-        <li>View Events</li>
-        <li>Upload Materials</li>
-        <li>Logout</li>
+function SidebarEducator() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // Clear user from localStorage
+    localStorage.removeItem("user");
+    alert("Logged out successfully");
+    navigate("/login");
+  };
+
+  return (
+    <div className="sidebar">
+      <h2 className="sidebar-title">Educator Panel</h2>
+
+      <ul className="sidebar-menu">
+        <li>
+          <Link
+            to="/educator/dashboard"
+            className={location.pathname === "/educator/dashboard" ? "active" : ""}
+          >
+            Dashboard
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            to="/educator/view-events"
+            className={location.pathname === "/educator/view-events" ? "active" : ""}
+          >
+            View Events
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            to="/educator/update-materials"
+            className={location.pathname === "/educator/update-materials" ? "active" : ""}
+          >
+            Upload Materials
+          </Link>
+        </li>
+
+        <li>
+        <button onClick={handleLogout} className="sidebar-logout-btn">
+          Logout
+        </button>
+      </li>
       </ul>
     </div>
   );

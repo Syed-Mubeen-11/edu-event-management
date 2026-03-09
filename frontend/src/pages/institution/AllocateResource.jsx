@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import SidebarInstitution from "../../components/SidebarInstitution";
+import "../../styles/institution.css";
 
 function AllocateResource() {
+
   const [event, setEvent] = useState("");
   const [resource, setResource] = useState("");
   const [quantity, setQuantity] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     alert("Resource allocated successfully!");
 
     setEvent("");
@@ -16,74 +19,59 @@ function AllocateResource() {
   };
 
   return (
-    <div style={{ display: "flex" }}>
+    <div className="institution-layout">
+
       <SidebarInstitution />
 
-      <div style={{ padding: "30px", flex: 1 }}>
-        <h1>Allocate Resources</h1>
-        <p>Assign resources to events.</p>
+      <div className="content">
 
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            maxWidth: "450px",
-            marginTop: "25px",
-            background: "#ffffff",
-            padding: "25px",
-            borderRadius: "10px",
-            boxShadow: "0px 3px 8px rgba(0,0,0,0.1)"
-          }}
-        >
-          <div style={fieldStyle}>
+        <h2>Allocate Resources</h2>
+
+        <form onSubmit={handleSubmit} className="form">
+
+          <div className="form-group">
             <label>Event Name</label>
             <input
               type="text"
               value={event}
               onChange={(e) => setEvent(e.target.value)}
+              placeholder="Enter event name"
               required
             />
           </div>
 
-          <div style={fieldStyle}>
+          <div className="form-group">
             <label>Resource Type</label>
             <input
               type="text"
               value={resource}
               onChange={(e) => setResource(e.target.value)}
+              placeholder="Projector, Chairs, WiFi"
               required
             />
           </div>
 
-          <div style={fieldStyle}>
+          <div className="form-group">
             <label>Quantity</label>
             <input
               type="number"
               value={quantity}
               onChange={(e) => setQuantity(e.target.value)}
+              min="1"
               required
             />
           </div>
 
-          <button style={buttonStyle}>Allocate Resource</button>
+          <button className="primary-btn">
+            Allocate Resource
+          </button>
+
         </form>
+
       </div>
+
     </div>
   );
 }
-
-const fieldStyle = {
-  display: "flex",
-  flexDirection: "column",
-  marginBottom: "15px"
-};
-
-const buttonStyle = {
-  background: "#2563eb",
-  color: "white",
-  padding: "10px",
-  border: "none",
-  borderRadius: "6px",
-  cursor: "pointer"
-};
 
 export default AllocateResource;
