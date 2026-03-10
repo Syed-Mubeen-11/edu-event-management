@@ -106,6 +106,18 @@ function Login() {
                 </button>
               </div>
             </div>
+            <div className="form-group">
+              <label>Login As</label>
+              <select
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+              >
+                <option value="student">Student</option>
+                <option value="educator">Educator</option>
+                <option value="institution">Institution</option>
+              </select>
+            </div>
+
             <div className="form-options">
               <label className="remember-me">
                 <input
@@ -113,6 +125,8 @@ function Login() {
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
                 />
+
+                
                 Remember me
               </label>
               <Link to="/forgot-password" className="forgot-link">

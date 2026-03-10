@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import edutechImage from "../assets/edutech.jpeg";
 import "../styles/Navbar.css";
 
 function Navbar() {
@@ -43,6 +44,7 @@ function Navbar() {
       <div className="navbar-container">
         <div className="logo-section">
           <Link to="/" className="logo">
+          <img src={edutechImage} alt="EduEvent Logo" className="logo-img" />
             <span className="logo-gradient">EduEvent</span>
             <span className="logo-dot">✨</span>
           </Link>

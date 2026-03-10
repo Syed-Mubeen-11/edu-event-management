@@ -58,10 +58,19 @@ body {
   to { transform: rotate(360deg); }
 }
 
+/* Logo Image */
+.logo-img{
+  width: 38px;
+  height: 38px;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
 .navbar-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0.5rem 2rem;
+  padding: 0px 0px;
   display: flex;
   justify-content: space-between;
   align-items: center;
