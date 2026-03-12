@@ -1,5 +1,8 @@
 # EduEvent Management System – Frontend
+## 🚀 Live Demo
 
+You can view the deployed application here:
+https://edu-event-management.vercel.app/
 ## Project Overview
 
 EduEvent Management System is a web application designed to manage educational events.
