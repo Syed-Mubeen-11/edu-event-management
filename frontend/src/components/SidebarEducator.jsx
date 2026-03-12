@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"; // Add useNavigate
-import "../styles/sidebar.css";
+import "../styles/Sidebar.css";
 
 function SidebarEducator() {
   const location = useLocation();
